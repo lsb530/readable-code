@@ -7,10 +7,10 @@ public interface OutputHandler {
 
     void showGameStartComments();
     void showBoard(GameBoard gameBoard);
-    void printGameWinningComment();
-    void printGameLosingComment();
-    void printCommentForSelectingCell();
-    void printCommentForUserAction();
-    void printExceptionMessage(GameException e);
-    void printSimpleMessage(String message);
+    void showGameWinningComment();
+    void showGameLosingComment();
+    void showCommentForSelectingCell();
+    void showCommentForUserAction();
+    void showExceptionMessage(GameException e);
+    void showSimpleMessage(String message);
 }
