@@ -27,6 +27,7 @@ public class EmptyCell implements Cell {
         return UNCHECKED_SIGN;
     }
 
+    @Override
     public CellSnapshot getSnapshot() {
         if (cellState.isOpened()) {
             return CellSnapshot.ofEmpty();

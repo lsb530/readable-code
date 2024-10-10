@@ -11,6 +11,8 @@ public interface Cell {
 
     String getSign();
 
+    CellSnapshot getSnapshot();
+
     void flag();
 
     void open();

@@ -30,6 +30,7 @@ public class NumberCell implements Cell {
         return UNCHECKED_SIGN;
     }
 
+    @Override
     public CellSnapshot getSnapshot() {
         if (cellState.isOpened()) {
             return CellSnapshot.ofNumber(nearbyLandMinCount);
