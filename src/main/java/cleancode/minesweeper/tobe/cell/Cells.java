@@ -22,8 +22,9 @@ public class Cells {
         return of(cellList);
     }
 
-    public boolean isAllCellChecked() {
+    public boolean isAllChecked() {
         return cells.stream()
             .allMatch(Cell::isChecked);
     }
+
 }

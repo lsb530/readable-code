@@ -54,4 +54,5 @@ public class CellPositions {
     public List<CellPosition> getPositions() {
         return new ArrayList<>(positions);
     }
+
 }

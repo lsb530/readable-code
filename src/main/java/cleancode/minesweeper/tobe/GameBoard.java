@@ -35,7 +35,6 @@ public class GameBoard {
         if (isOpenedCell(cellPosition)) {
             return;
         }
-
         if (isLandMineCellAt(cellPosition)) {
             return;
         }
@@ -67,7 +66,7 @@ public class GameBoard {
 
     public boolean isAllCellChecked() {
         Cells cells = Cells.from(board);
-        return cells.isAllCellChecked();
+        return cells.isAllChecked();
     }
 
     public boolean isInvalidCellPosition(CellPosition cellPosition) {
@@ -92,29 +91,27 @@ public class GameBoard {
 
     private void initializeEmptyCells(CellPositions cellPositions) {
         List<CellPosition> allPositions = cellPositions.getPositions();
-        updatedCellsAt(allPositions, new EmptyCell());
+        for (CellPosition position : allPositions) {
+            updateCellAt(position, new EmptyCell());
+        }
     }
 
     private void initializeLandMineCells(List<CellPosition> landMinePositions) {
-        updatedCellsAt(landMinePositions, new LandMineCell());
+        for (CellPosition position : landMinePositions) {
+            updateCellAt(position, new LandMineCell());
+        }
     }
 
     private void initializeNumberCells(List<CellPosition> numberPositionCandidates) {
         for (CellPosition candidatePosition : numberPositionCandidates) {
             int count = countNearbyLandMines(candidatePosition);
             if (count != 0) {
-                updatedCellAt(candidatePosition, new NumberCell(count));
+                updateCellAt(candidatePosition, new NumberCell(count));
             }
         }
     }
 
-    private void updatedCellsAt(List<CellPosition> allPositions, Cell cell) {
-        for (CellPosition position : allPositions) {
-            updatedCellAt(position, cell);
-        }
-    }
-
-    private void updatedCellAt(CellPosition position, Cell cell) {
+    private void updateCellAt(CellPosition position, Cell cell) {
         board[position.getRowIndex()][position.getColIndex()] = cell;
     }
 
@@ -135,7 +132,7 @@ public class GameBoard {
         return board[0].length;
     }
 
-    public int countNearbyLandMines(CellPosition cellPosition) {
+    private int countNearbyLandMines(CellPosition cellPosition) {
         int rowSize = getRowSize();
         int colSize = getColSize();
 
