@@ -81,27 +81,29 @@ public class GameBoard {
     public void initializeGame() {
         CellPositions cellPositions = CellPositions.from(board);
 
-        int rowSize = getRowSize();
-        int colSize = getColSize();
-
-        List<CellPosition> allPositions = cellPositions.getPositions();
-        updatedCellsAt(allPositions, new EmptyCell());
+        initializeEmptyCells(cellPositions);
 
         List<CellPosition> landMinePositions = cellPositions.extractRandomPositions(landMineCount);
+        initializeLandMineCells(landMinePositions);
+
+        List<CellPosition> numberPositionCandidates = cellPositions.subtract(landMinePositions);
+        initializeNumberCells(numberPositionCandidates);
+    }
+
+    private void initializeEmptyCells(CellPositions cellPositions) {
+        List<CellPosition> allPositions = cellPositions.getPositions();
+        updatedCellsAt(allPositions, new EmptyCell());
+    }
+
+    private void initializeLandMineCells(List<CellPosition> landMinePositions) {
         updatedCellsAt(landMinePositions, new LandMineCell());
+    }
 
-        for (int row = 0; row < rowSize; row++) {
-            for (int col = 0; col < colSize; col++) {
-                CellPosition cellPosition = CellPosition.of(row, col);
-
-                if (isLandMineCellAt(cellPosition)) {
-                    continue;
-                }
-                int count = countNearbyLandMines(cellPosition);
-                if (count == 0) {
-                    continue;
-                }
-                updatedCellAt(cellPosition, new NumberCell(count));
+    private void initializeNumberCells(List<CellPosition> numberPositionCandidates) {
+        for (CellPosition candidatePosition : numberPositionCandidates) {
+            int count = countNearbyLandMines(candidatePosition);
+            if (count != 0) {
+                updatedCellAt(candidatePosition, new NumberCell(count));
             }
         }
     }

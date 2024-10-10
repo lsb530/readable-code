@@ -38,6 +38,19 @@ public class CellPositions {
         return cellPositions.subList(0, count);
     }
 
+    public List<CellPosition> subtract(List<CellPosition> positionListToSubtract) {
+        List<CellPosition> cellPositions = new ArrayList<>(positions);
+        CellPositions positionsToSubtract = CellPositions.of(positionListToSubtract);
+
+        return cellPositions.stream()
+            .filter(positionsToSubtract::doesNotContain)
+            .toList();
+    }
+
+    private boolean doesNotContain(CellPosition position) {
+        return !positions.contains(position);
+    }
+
     public List<CellPosition> getPositions() {
         return new ArrayList<>(positions);
     }
