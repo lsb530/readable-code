@@ -68,9 +68,8 @@ public class GameBoard {
     }
 
     public boolean isAllCellChecked() {
-        return Arrays.stream(board)
-            .flatMap(Arrays::stream)
-            .allMatch(Cell::isChecked);
+        Cells cells = Cells.from(board);
+        return cells.isAllCellChecked();
     }
 
     public boolean isInvalidCellPosition(CellPosition cellPosition) {
