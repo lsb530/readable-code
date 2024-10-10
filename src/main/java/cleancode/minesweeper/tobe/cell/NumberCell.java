@@ -20,17 +20,6 @@ public class NumberCell implements Cell {
     }
 
     @Override
-    public String getSign() {
-        if (cellState.isOpened()) {
-            return String.valueOf(nearbyLandMinCount);
-        }
-        if (cellState.isFlagged()) {
-            return FLAG_SIGN;
-        }
-        return UNCHECKED_SIGN;
-    }
-
-    @Override
     public CellSnapshot getSnapshot() {
         if (cellState.isOpened()) {
             return CellSnapshot.ofNumber(nearbyLandMinCount);
