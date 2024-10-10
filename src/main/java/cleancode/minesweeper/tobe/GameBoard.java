@@ -3,12 +3,10 @@ package cleancode.minesweeper.tobe;
 import cleancode.minesweeper.tobe.cell.*;
 import cleancode.minesweeper.tobe.gamelevel.GameLevel;
 import cleancode.minesweeper.tobe.position.CellPosition;
+import cleancode.minesweeper.tobe.position.CellPositions;
 import cleancode.minesweeper.tobe.position.RelativePosition;
 
-import java.util.Arrays;
 import java.util.List;
-import java.util.Random;
-import java.util.stream.Stream;
 
 public class GameBoard {
 
@@ -81,20 +79,16 @@ public class GameBoard {
     }
 
     public void initializeGame() {
+        CellPositions cellPositions = CellPositions.from(board);
+
         int rowSize = getRowSize();
         int colSize = getColSize();
 
-        for (int row = 0; row < rowSize; row++) {
-            for (int col = 0; col < colSize; col++) {
-                board[row][col] = new EmptyCell();
-            }
-        }
+        List<CellPosition> allPositions = cellPositions.getPositions();
+        updatedCellsAt(allPositions, new EmptyCell());
 
-        for (int i = 0; i < landMineCount; i++) {
-            int landMineCol = new Random().nextInt(colSize);
-            int landMineRow = new Random().nextInt(rowSize);
-            board[landMineRow][landMineCol] = new LandMineCell();
-        }
+        List<CellPosition> landMinePositions = cellPositions.extractRandomPositions(landMineCount);
+        updatedCellsAt(landMinePositions, new LandMineCell());
 
         for (int row = 0; row < rowSize; row++) {
             for (int col = 0; col < colSize; col++) {
@@ -107,9 +101,19 @@ public class GameBoard {
                 if (count == 0) {
                     continue;
                 }
-                board[row][col] = new NumberCell(count);
+                updatedCellAt(cellPosition, new NumberCell(count));
             }
         }
+    }
+
+    private void updatedCellsAt(List<CellPosition> allPositions, Cell cell) {
+        for (CellPosition position : allPositions) {
+            updatedCellAt(position, cell);
+        }
+    }
+
+    private void updatedCellAt(CellPosition position, Cell cell) {
+        board[position.getRowIndex()][position.getColIndex()] = cell;
     }
 
     public String getSign(CellPosition cellPosition) {
