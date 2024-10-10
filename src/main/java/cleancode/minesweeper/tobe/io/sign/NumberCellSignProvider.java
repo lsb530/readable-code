@@ -5,8 +5,6 @@ import cleancode.minesweeper.tobe.cell.CellSnapshotStatus;
 
 public class NumberCellSignProvider implements CellSignProvidable {
 
-    private static final String LAND_MINE_SIGN = "☼";
-
     @Override
     public boolean supports(CellSnapshot cellSnapshot) {
         return cellSnapshot.isSameStatus(CellSnapshotStatus.NUMBER);
