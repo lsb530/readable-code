@@ -30,6 +30,15 @@ public class NumberCell implements Cell {
         return UNCHECKED_SIGN;
     }
 
+    public CellSnapshot getSnapshot() {
+        if (cellState.isOpened()) {
+            return CellSnapshot.ofNumber(nearbyLandMinCount);
+        }
+        if (cellState.isFlagged()) {
+            return CellSnapshot.ofFlag();
+        }
+        return CellSnapshot.ofUnchecked();
+    }
 
     @Override
     public void flag() {
