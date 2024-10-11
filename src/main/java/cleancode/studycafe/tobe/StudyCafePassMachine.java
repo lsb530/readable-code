@@ -55,9 +55,7 @@ public class StudyCafePassMachine {
     }
 
     private Optional<StudyCafeLockerPass> selectLockerPass(StudyCafePass selectedPass) {
-        // 고정 좌석 타입이 아닌가?
-        // 사물함 옵션을 사용할 수 있는 타입이 아닌가?
-        if (selectedPass.doesNotFixedType()) {
+        if (selectedPass.cannotUseLocker()) {
             return Optional.empty();
         }
 
