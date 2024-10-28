@@ -1,6 +1,7 @@
 package cleancode.studycafe.refactor;
 
-import cleancode.studycafe.refactor.exception.AppException;
+import cleancode.studycafe.refactor.exception.StudyCafeAppException;
+import cleancode.studycafe.refactor.handler.StudyCafeInformationHandler;
 import cleancode.studycafe.refactor.io.InputHandler;
 import cleancode.studycafe.refactor.io.OutputHandler;
 import cleancode.studycafe.refactor.io.StudyCafeFileHandler;
@@ -71,7 +72,7 @@ public class StudyCafePassMachine {
                     outputHandler.showPassOrderSummary(selectedPass, null);
                 }
             }
-        } catch (AppException e) {
+        } catch (StudyCafeAppException e) {
             outputHandler.showSimpleMessage(e.getMessage());
         } catch (Exception e) {
             outputHandler.showSimpleMessage("알 수 없는 오류가 발생했습니다.");

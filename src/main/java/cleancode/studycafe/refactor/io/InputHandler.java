@@ -1,7 +1,7 @@
 package cleancode.studycafe.refactor.io;
 
-import cleancode.studycafe.refactor.exception.AppException;
-import cleancode.studycafe.refactor.model.StudyCafePass;
+import cleancode.studycafe.refactor.exception.StudyCafeAppException;
+import cleancode.studycafe.refactor.model.pass.StudyCafePass;
 import cleancode.studycafe.refactor.model.StudyCafePassType;
 
 import java.util.List;
@@ -23,7 +23,8 @@ public class InputHandler {
         if ("3".equals(userInput)) {
             return StudyCafePassType.FIXED;
         }
-        throw new AppException("잘못된 입력입니다.");
+
+        throw new StudyCafeAppException("잘못된 입력입니다.");
     }
 
     public StudyCafePass getSelectPass(List<StudyCafePass> passes) {
