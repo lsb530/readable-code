@@ -1,7 +1,8 @@
 package cleancode.studycafe.refactor.io;
 
-import cleancode.studycafe.refactor.model.StudyCafeLockerPass;
-import cleancode.studycafe.refactor.model.StudyCafePass;
+import cleancode.studycafe.refactor.model.locker.StudyCafeLockerPass;
+import cleancode.studycafe.refactor.model.pass.StudyCafePass;
+import cleancode.studycafe.refactor.model.StudyCafePassType;
 
 import java.util.List;
 
@@ -27,27 +28,76 @@ public class OutputHandler {
         System.out.println("이용권 목록");
         for (int index = 0; index < passes.size(); index++) {
             StudyCafePass pass = passes.get(index);
-            System.out.println(String.format("%s. ", index + 1) + pass.display());
+            System.out.println(String.format("%s. ", index + 1) + showSelectedCafePass(pass));
         }
+    }
+
+    public String showSelectedCafePass(StudyCafePass selectedCafePass) {
+        StudyCafePassType passType = selectedCafePass.getPassType();
+        int duration = selectedCafePass.getDuration();
+        int price = selectedCafePass.getPrice();
+
+        if (passType == StudyCafePassType.HOURLY) {
+            return String.format("%s시간권 - %d원", duration, price);
+        }
+        if (passType == StudyCafePassType.WEEKLY) {
+            return String.format("%s주권 - %d원", duration, price);
+        }
+        if (passType == StudyCafePassType.FIXED) {
+            return String.format("%s주권 - %d원", duration, price);
+        }
+        return "";
+    }
+
+    public String showSelectedLockerPass(StudyCafeLockerPass selectedLockerPass) {
+        StudyCafePassType passType = selectedLockerPass.getPassType();
+        int duration = selectedLockerPass.getDuration();
+        int price = selectedLockerPass.getPrice();
+
+        if (passType == StudyCafePassType.HOURLY) {
+            return String.format("%s시간권 - %d원", duration, price);
+        }
+        if (passType == StudyCafePassType.WEEKLY) {
+            return String.format("%s주권 - %d원", duration, price);
+        }
+        if (passType == StudyCafePassType.FIXED) {
+            return String.format("%s주권 - %d원", duration, price);
+        }
+        return "";
     }
 
     public void askLockerPass(StudyCafeLockerPass lockerPass) {
         System.out.println();
         String askMessage = String.format(
             "사물함을 이용하시겠습니까? (%s)",
-            lockerPass.display()
+            showSelectedLockerPass(lockerPass)
         );
 
         System.out.println(askMessage);
         System.out.println("1. 예 | 2. 아니오");
     }
 
+    public void showPassOrderSummary(StudyCafePass selectedPass) {
+        System.out.println();
+        System.out.println("이용 내역");
+        System.out.println("이용권: " + showSelectedCafePass(selectedPass));
+
+        int discountPrice = selectedPass.getDiscountPrice();
+        if (discountPrice > 0) {
+            System.out.println("이벤트 할인 금액: " + discountPrice + "원");
+        }
+
+        int totalPrice = selectedPass.getTotalPriceOf(discountPrice);
+        System.out.println("총 결제 금액: " + totalPrice + "원");
+        System.out.println();
+    }
+
     public void showPassOrderSummary(StudyCafePass selectedPass, StudyCafeLockerPass lockerPass) {
         System.out.println();
         System.out.println("이용 내역");
-        System.out.println("이용권: " + selectedPass.display());
+        System.out.println("이용권: " + showSelectedCafePass(selectedPass));
         if (lockerPass != null) {
-            System.out.println("사물함: " + lockerPass.display());
+            System.out.println("사물함: " + showSelectedLockerPass(lockerPass));
         }
 
         double discountRate = selectedPass.getDiscountRate();

@@ -1,4 +1,6 @@
-package cleancode.studycafe.refactor.model;
+package cleancode.studycafe.refactor.model.pass;
+
+import cleancode.studycafe.refactor.model.StudyCafePassType;
 
 public class StudyCafePass {
 
@@ -18,6 +20,14 @@ public class StudyCafePass {
         return new StudyCafePass(passType, duration, price, discountRate);
     }
 
+    public int getDiscountPrice() {
+        return (int) (price * discountRate);
+    }
+
+    public int getTotalPriceOf(int discountPrice) {
+        return price - discountPrice;
+    }
+
     public StudyCafePassType getPassType() {
         return passType;
     }
@@ -32,19 +42,6 @@ public class StudyCafePass {
 
     public double getDiscountRate() {
         return discountRate;
-    }
-
-    public String display() {
-        if (passType == StudyCafePassType.HOURLY) {
-            return String.format("%s시간권 - %d원", duration, price);
-        }
-        if (passType == StudyCafePassType.WEEKLY) {
-            return String.format("%s주권 - %d원", duration, price);
-        }
-        if (passType == StudyCafePassType.FIXED) {
-            return String.format("%s주권 - %d원", duration, price);
-        }
-        return "";
     }
 
 }
